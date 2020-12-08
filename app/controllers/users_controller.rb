@@ -73,7 +73,7 @@ class UsersController < ApplicationController
         :username, 
         :email, 
         :password_digest,
-        :password_confirmation
+        :password_confirmation,
       )
     end
 end
