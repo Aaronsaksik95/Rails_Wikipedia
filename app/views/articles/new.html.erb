@@ -1,5 +1,14 @@
-<h1>New Article</h1>
-
-<%= render 'form', article: @article %>
-
-<%= link_to 'Back', articles_path %>
+<%= notice %>
+<%= form_for @article do |f| %>
+    <div>
+    <%= f.label :title %>
+    <%= f.text_area :title %>
+    </div>
+  <div>
+    <%= f.label :content %>
+    <%= f.text_area :content %>
+  </div>
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>

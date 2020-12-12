@@ -1,29 +1,27 @@
-<p id="notice"><%= notice %></p>
 
 <h1>Articles</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Content</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @articles.each do |article| %>
-      <tr>
-        <td><%= article.title %></td>
-        <td><%= article.content %></td>
-        <td><%= link_to 'Show', article %></td>
-        <td><%= link_to 'Edit', edit_article_path(article) %></td>
-        <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
 <%= link_to 'New Article', new_article_path %>
+<% for article in @articles %>
+  <div style="padding: 10px; border: 1px solid #ddd; margin: 10px; border-radius: 5px;">
+    <div class="">
+      Content
+    </div>
+    <div class="">
+      <%= article.content %>
+    </div>
+    <div style="padding: 20px"></div>
+    <div class="">
+      Username
+    </div>
+    <div class="">
+      <%= article.user.name %>
+    </div>
+
+    <div style="padding: 20px"></div>
+
+    <%= link_to "Edit", edit_article_path(article) %>
+    <% if article.user == @current_user %>
+      <%= link_to "Delete", delete_article_path(article), method: :delete %>
+    <% end %>
+  </div>
+<% end %>
