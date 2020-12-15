@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_08_155748) do
+ActiveRecord::Schema.define(version: 2020_12_15_120713) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
@@ -21,6 +21,22 @@ ActiveRecord::Schema.define(version: 2020_12_08_155748) do
     t.index ["user_id"], name: "index_articles_on_user_id"
   end
 
+  create_table "articles_users", id: false, force: :cascade do |t|
+    t.integer "article_id", null: false
+    t.integer "user_id", null: false
+  end
+
+  create_table "historicals", force: :cascade do |t|
+    t.string "title"
+    t.string "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "article_id", null: false
+    t.integer "user_id"
+    t.index ["article_id"], name: "index_historicals_on_article_id"
+    t.index ["user_id"], name: "index_historicals_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "email"
@@ -28,6 +44,7 @@ ActiveRecord::Schema.define(version: 2020_12_08_155748) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
-  add_foreign_key "articles", "users"
 
+  add_foreign_key "historicals", "articles"
+  add_foreign_key "historicals", "users"
 end

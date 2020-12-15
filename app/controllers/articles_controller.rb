@@ -1,7 +1,7 @@
 class ArticlesController < ApplicationController
   before_action :authorize_user, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_article, only: [:show, :edit, :update, :destroy]
-  before_action :redirect_user_if_no_article, only: [:edit, :update, :destroy]
+  before_action :redirect_user_if_no_article, only: [:destroy]
 
   def index
     @articles = Article.all
@@ -22,6 +22,10 @@ class ArticlesController < ApplicationController
     else
       redirect_to new_article_path, notice: 'Wrong'
     end
+    @historical = Historical.new(article_params)
+    @historical.user_id = @current_user.id
+    @historical.article_id = @article.id
+    @historical.save
   end
 
   def edit
@@ -29,13 +33,24 @@ class ArticlesController < ApplicationController
 
   def update
     if @article.update(article_params)
-      redirect_to articles_path
+      @historical = Historical.new(article_params)
+      @historical.user_id = @current_user.id
+      @historical.article_id = @article.id
+      @historical.save
+      UserMailer.with(
+        author: @article.user, 
+        editor: @current_user, 
+        date: @article.updated_at
+      ).notif_update.deliver_later
+      redirect_to articles_path 
     else
       redirect_to edit_article_path(@article), notice: 'Wrong'
     end
   end
 
   def destroy
+    @historical = Historical.where(article_id: @article.id)
+    @historical.destroy_all
     @article.destroy
     respond_to do |format|
       format.html { redirect_to articles_path, notice: 'Article was successfully destroyed.' }

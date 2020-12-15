@@ -1,0 +1,7 @@
+Bonjour <%= @author.username %>
+<% if @author.username == @editor.username %>
+Vous avez modifie votre article
+<% else %>
+Votre article a ete modifie par <%= @editor.username %>
+<% end %>
+Le <%= @date %>
