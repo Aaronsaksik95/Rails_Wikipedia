@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :historicals
   resources :articles
   resources :users
+  get    '/ranking',                 to: 'users#ranking', as: 'ranking'
   get    '/historicals/article/:id', to: 'historicals#index', as: 'historical_article'
   get    '/sign_in',                 to: 'sessions#sign_in_form'
   post   '/sign_in',                 to: 'sessions#sign_in'

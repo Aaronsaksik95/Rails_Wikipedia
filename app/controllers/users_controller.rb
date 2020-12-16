@@ -7,6 +7,9 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  def ranking
+    @users = User.order(point: :desc)
+  end
   # GET /users/1
   # GET /users/1.json
   def show

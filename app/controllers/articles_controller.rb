@@ -18,14 +18,12 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
     @article.user = @current_user
     if @article.save
+      add_historical
+      add_point_user(1)
       redirect_to articles_path
     else
       redirect_to new_article_path, notice: 'Wrong'
     end
-    @historical = Historical.new(article_params)
-    @historical.user_id = @current_user.id
-    @historical.article_id = @article.id
-    @historical.save
   end
 
   def edit
@@ -33,10 +31,8 @@ class ArticlesController < ApplicationController
 
   def update
     if @article.update(article_params)
-      @historical = Historical.new(article_params)
-      @historical.user_id = @current_user.id
-      @historical.article_id = @article.id
-      @historical.save
+      add_historical
+      add_point_user(0.5)
       UserMailer.with(
         author: @article.user, 
         editor: @current_user, 
@@ -76,7 +72,22 @@ class ArticlesController < ApplicationController
     end
   end
 
+  def add_point_user(x)
+    @user = User.find(@current_user.id)
+    @user.update_attribute('point', @user.point + x)
+  end
+
+  def add_historical
+    @historical = Historical.new(article_params)
+    @historical.user_id = @current_user.id
+    @historical.article_id = @article.id
+    @historical.save
+  end
+
   def article_params
-    params.require(:article).permit(:content, :title)
+    params.require(:article).permit(
+      :content, 
+      :title
+    )
   end
 end
