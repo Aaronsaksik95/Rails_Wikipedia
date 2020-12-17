@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_16_163056) do
+ActiveRecord::Schema.define(version: 2020_12_16_235313) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
@@ -24,6 +24,11 @@ ActiveRecord::Schema.define(version: 2020_12_16_163056) do
   create_table "articles_users", id: false, force: :cascade do |t|
     t.integer "article_id", null: false
     t.integer "user_id", null: false
+  end
+
+  create_table "articles_usertags", id: false, force: :cascade do |t|
+    t.integer "article_id", null: false
+    t.integer "usertag_id", null: false
   end
 
   create_table "historicals", force: :cascade do |t|
@@ -46,6 +51,14 @@ ActiveRecord::Schema.define(version: 2020_12_16_163056) do
     t.float "point", default: 0.0
   end
 
+  create_table "usertags", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_usertags_on_user_id"
+  end
+
   add_foreign_key "historicals", "articles"
   add_foreign_key "historicals", "users"
+  add_foreign_key "usertags", "users"
 end
