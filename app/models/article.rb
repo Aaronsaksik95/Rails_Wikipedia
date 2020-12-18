@@ -3,9 +3,18 @@ class Article < ApplicationRecord
     has_many :historicals
     has_and_belongs_to_many :usertags
     before_save :update_usertags
+    after_save  :notify_usertags
+
 
     def update_usertags
         self.usertags = extract_usertags
+    end
+
+    def notify_usertags
+      for tag in self.usertags
+        user = tag.user
+        TagMailer.with(user: user).notif_tag.deliver_later
+      end
     end
 
     private

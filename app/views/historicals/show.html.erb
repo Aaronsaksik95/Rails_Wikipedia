@@ -9,6 +9,5 @@
   <strong>Content:</strong>
   <%= @historical.content %>
 </p>
+<td><%= link_to 'Récupérer la version', @historical, method: :retrieve_history, data: { confirm: "Vous êtes sûr de vouloir récupérer cette version de l'article ?" } %></td>
 
-<%= link_to 'Edit', edit_historical_path(@historical) %> |
-<%= link_to 'Back', historicals_path %>

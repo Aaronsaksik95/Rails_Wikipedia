@@ -43,7 +43,7 @@ class ArticlesController < ApplicationController
       redirect_to edit_article_path(@article), notice: 'Wrong'
     end
   end
-
+  
   def destroy
     @historical = Historical.where(article_id: @article.id)
     @historical.destroy_all

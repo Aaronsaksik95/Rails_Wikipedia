@@ -9,6 +9,11 @@
   <strong>Content:</strong>
   <%= @article.content %>
 </p>
-
-<%= link_to 'Edit', edit_article_path(@article) %> |
+<% if @current_user && @current_user.id == @article.user.id %>
+  <p><%= link_to 'Supprimer', @article, method: :delete, data: { confirm: 'Are you sure?' } %></p>
+  <p><%= link_to 'Modifié', edit_article_path(@article) %></p>
+  <p><%= link_to 'Historique', historical_article_path(@article) %></p>
+<% elsif @current_user %>
+  <p><%= link_to 'Modifié', edit_article_path(@article) %></p>
+<% end %>
 <%= link_to 'Back', articles_path %>

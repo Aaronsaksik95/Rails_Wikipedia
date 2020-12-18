@@ -2,28 +2,17 @@
 
 <h1>Historicals</h1>
 
-<table>
-  <thead>
-    <tr> 
-      <th>Article_id</th>
-      <th>Title</th>
-      <th>Content</th>
-      <th>User_id</th>
-      <th>Modifié le:</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+  <div class="flex-wrap d-flex justify-content-around m-5">
 
-  <tbody>
     <% @historicals.each do |historical| %>
-      <tr>
-        <td><%= historical.article.id %></td>
-        <td><%= historical.title %></td>
-        <td><%= historical.content %></td>
-        <td><%= historical.user.id %></td>
-        <td><%= historical.created_at %></td>
-        <td><%= link_to 'Show', historical %></td>
-      </tr>
+    <div class="card m-2" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title"><%= historical.title %></h5>
+        <p class="card-subtitle mb-2 text-muted"><%= historical.updated_at %></p>
+        <p class="card-text"><%= historical.content %></p>
+        <p class="card-text">Modifié par <%= historical.user.username %></p>
+        <p> <%= link_to 'Voir plus', historical %></p>
+      </div>
+    </div>
     <% end %>
-  </tbody>
-</table>
+    </div>

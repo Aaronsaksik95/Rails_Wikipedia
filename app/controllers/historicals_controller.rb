@@ -19,6 +19,17 @@ class HistoricalsController < ApplicationController
     @historical = Historical.new
   end
 
+  def retrieve_history
+    @historical = Historical.find(params[:id])
+    @article = Article.find(@historical.article_id)
+    @article.update_attribute('title', @historical.title)
+    @article.update_attribute('content', @historical.content)
+    if @article.update_attribute('title', 'content')
+      redirect_to articles_path 
+    end
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_historical
