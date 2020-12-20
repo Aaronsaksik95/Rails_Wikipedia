@@ -6,6 +6,10 @@ class ArticlesController < ApplicationController
   def index
     @articles = Article.all
   end
+  
+  def my_article
+    @articles = Article.where(:user_id => @current_user.id)
+  end
 
   def show
   end

@@ -1,13 +1,15 @@
+<div class="card m-3 p-3">
 <p id="notice"><%= notice %></p>
 
-<p>
+<p class="card-header">
   <strong>Title:</strong>
   <%= @historical.title %>
 </p>
 
-<p>
+<p class="card-body">
   <strong>Content:</strong>
   <%= @historical.content %>
 </p>
-<td><%= link_to 'Récupérer la version', @historical, method: :retrieve_history, data: { confirm: "Vous êtes sûr de vouloir récupérer cette version de l'article ?" } %></td>
+</div>
+<td><%= link_to 'Récupérer la version', @historical, method: :retrieve_history, data: { confirm: "Vous êtes sûr de vouloir récupérer cette version de l'article ?" }, :class => "not-nav" %></td>
 

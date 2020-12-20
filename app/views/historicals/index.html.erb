@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Historicals</h1>
+<h1 class="border-bottom border-info mt-4">Historique</h1>
 
   <div class="flex-wrap d-flex justify-content-around m-5">
 
@@ -10,8 +10,8 @@
         <h5 class="card-title"><%= historical.title %></h5>
         <p class="card-subtitle mb-2 text-muted"><%= historical.updated_at %></p>
         <p class="card-text"><%= historical.content %></p>
-        <p class="card-text">Modifié par <%= historical.user.username %></p>
-        <p> <%= link_to 'Voir plus', historical %></p>
+        <p class="card-text">Modifier par <%= historical.user.username %></p>
+        <p> <%= link_to 'Voir plus', historical, :class => "not-nav" %></p>
       </div>
     </div>
     <% end %>

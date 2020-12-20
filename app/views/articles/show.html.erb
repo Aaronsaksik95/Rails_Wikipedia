@@ -1,19 +1,31 @@
+<div class="card m-3 p-3">
 <p id="notice"><%= notice %></p>
 
-<p>
+<p class="card-header">
   <strong>Title:</strong>
   <%= @article.title %>
 </p>
 
-<p>
+<p class="card-body">
   <strong>Content:</strong>
   <%= @article.content %>
 </p>
-<% if @current_user && @current_user.id == @article.user.id %>
-  <p><%= link_to 'Supprimer', @article, method: :delete, data: { confirm: 'Are you sure?' } %></p>
-  <p><%= link_to 'Modifié', edit_article_path(@article) %></p>
-  <p><%= link_to 'Historique', historical_article_path(@article) %></p>
-<% elsif @current_user %>
-  <p><%= link_to 'Modifié', edit_article_path(@article) %></p>
+
+<p class="card-body">
+<% if @article.usertags[0] %>
+  <strong>Mention:</strong>
+  <% for tag in @article.usertags %>
+    <small><%=tag.user.username%></small>
+  <% end %>
 <% end %>
-<%= link_to 'Back', articles_path %>
+</p>
+<% if @current_user && @current_user.id == @article.user.id %>
+  <p><%= link_to 'Supprimer', @article, method: :delete, data: { confirm: 'Are you sure?' }, :class => "not-nav" %></p>
+  <p><%= link_to 'Modifier', edit_article_path(@article), :class => "not-nav" %></p>
+  <p><%= link_to 'Historique', historical_article_path(@article), :class => "not-nav" %></p>
+<% elsif @current_user %>
+  <p><%= link_to 'Modifier', edit_article_path(@article), :class => "not-nav" %></p>
+<% end %>
+
+</div>
+<%= link_to 'Retour', articles_path, :class => "not-nav" %>

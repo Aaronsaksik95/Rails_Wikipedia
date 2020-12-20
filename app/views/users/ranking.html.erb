@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Classement</h1>
+<h1 class="border-bottom border-info mt-4">Classement</h1>
 
 <table class="table w-50 mx-auto">
   <thead>
@@ -17,7 +17,7 @@
       <tr>
         <td><%= @users.index(user)+1 %></td>
         <td><%= user.username %></td>
-        <td><%= user.point %></td>
+        <td class="bg-info"><%= user.point %></td>
         <td><%= user.created_at %></td>
       </tr>
     <% end %>

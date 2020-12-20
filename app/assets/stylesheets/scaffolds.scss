@@ -13,15 +13,24 @@ pre {
   padding: 10px;
   font-size: 11px; }
 
-// a {
-//   color: #000; }
+.not-nav {
+  color: #000;
+  text-decoration: none; 
+  border: 1px solid rgb(138, 138, 138) ;
+  border-radius: 5px;
+  padding: 3px;
+  margin: 3px;
+}
+.not-nav:hover {
+  background-color: #0dcaf0;
+}
 
-// a:visited {
-//   color: #666; }
 
-// a:hover {
-//   color: #fff;
-//   background-color: #000; }
+a:hover {
+  color: white;
+  background-color: rgb(172, 172, 172); 
+  border-radius: 5px;
+}
 
 th {
   padding-bottom: 5px; }

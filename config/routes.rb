@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :articles
+  get    '/myarticle',               to: 'articles#my_article',           as: 'my_article'
   get    '/users',                   to: redirect("/")
   resources :users
   get    '/',                        to: 'articles#index'

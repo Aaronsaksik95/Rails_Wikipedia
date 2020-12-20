@@ -1,19 +1,26 @@
+<div class="card m-3 p-3">
 <p id="notice"><%= notice %></p>
 
-<p>
+<p class="card-header">
   <strong>Username:</strong>
   <%= @user.username %>
 </p>
 
-<p>
+<p class="card-body">
   <strong>Email:</strong>
   <%= @user.email %>
 </p>
 
-<p>
-  <strong>Password digest:</strong>
-  <%= @user.password_digest %>
+<p class="card-body bg-info">
+  <strong>Point:</strong>
+  <%= @user.point %>
 </p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<p class="card-body">
+  <strong>Création de compte</strong>
+  <%= @user.created_at %>
+</p>
+</div>
+
+<%= link_to 'Edit', edit_user_path(@user), :class => "not-nav" %> |
+<%= link_to 'Retour', users_path, :class => "not-nav" %>

@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1 class="border-bottom border-info mt-4">Rails Wikipedia</h1>
+<h1 class="border-bottom border-info mt-4">Mes Articles</h1>
 
 <div class="flex-wrap d-flex justify-content-around m-5">
   <% @articles.each do |article| %>
@@ -17,16 +17,20 @@
           <% end %>
         <% end %>
     </div>
-        <p> <%= link_to 'Voir +', article, :class => "not-nav"%></p>
+    <div class="d-flex">
+    <div class="">
+        <p> <%= link_to 'Voir +', article, :class => "not-nav" %></p>
         <% if @current_user && @current_user.id == article.user.id %>
-        <div class="d-flex">
           <p><%= link_to 'Supprimer', article, method: :delete, data: { confirm: 'Are you sure?' }, :class => "not-nav" %></p>
+          </div> 
+          <div class="">
           <p><%= link_to 'Modifier', edit_article_path(article), :class => "not-nav" %></p>
           <p><%= link_to 'Historique', historical_article_path(article), :class => "not-nav" %></p>
-        </div>
+          </div>
         <% elsif @current_user %>
           <p><%= link_to 'Modifier', edit_article_path(article), :class => "not-nav" %></p>
         <% end %>
+        </div>
       </div>
     </div>
   <% end %>
