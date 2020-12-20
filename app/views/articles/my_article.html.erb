@@ -21,7 +21,7 @@
     <div class="">
         <p> <%= link_to 'Voir +', article, :class => "not-nav" %></p>
         <% if @current_user && @current_user.id == article.user.id %>
-          <p><%= link_to 'Supprimer', article, method: :delete, data: { confirm: 'Are you sure?' }, :class => "not-nav" %></p>
+          <p><%= link_to 'Corbeille', article, method: :delete, data: { confirm: 'Are you sure?' }, :class => "not-nav" %></p>
           </div> 
           <div class="">
           <p><%= link_to 'Modifier', edit_article_path(article), :class => "not-nav" %></p>
@@ -33,5 +33,8 @@
         </div>
       </div>
     </div>
+  <% end %>
+  <% if @articles.empty? %>
+    <h3 class='text-info'>AUCUN ARTICLE.</h3>
   <% end %>
 </div>

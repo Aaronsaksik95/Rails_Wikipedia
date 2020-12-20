@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1 class="border-bottom border-info mt-4">Corbeille</h1>
+
+<div class="flex-wrap d-flex justify-content-around m-5">
+  <% @articles.each do |article| %>
+    <div class="card m-2" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title"><%= article.title %></h5>
+        <p class="card-subtitle mb-2 text-muted"><%= article.updated_at %></p>
+        <p class="card-text"><%= article.content %></p>
+        <div class="">
+        <% if article.usertags[0] %>
+          <small>MENTION:</small>
+          <% for tag in article.usertags %>
+            <small><%=tag.user.username%></small>
+          <% end %>
+        <% end %>
+    </div>
+    <div class="d-flex">
+    <div class="">
+        <p> <%= link_to 'Voir +', article, :class => "not-nav" %></p>
+        <% if @current_user && @current_user.id == article.user.id %>
+          <p><%= link_to "Détruire l'article", article, method: :delete, data: { confirm: 'Are you sure?' }, :class => "not-nav" %></p>
+          </div> 
+          <div class="">
+          <p><%= link_to 'Récupérer', recover_my_article_path(article), :class => "not-nav" %></p>
+          <p><%= link_to 'Historique', historical_article_path(article), :class => "not-nav" %></p>
+          </div>
+        <% elsif @current_user %>
+          <p><%= link_to 'Modifier', edit_article_path(article), :class => "not-nav" %></p>
+        <% end %>
+        </div>
+        <small class="card-text text-danger">Supprimer le <%= article.display_or_not %></small>
+      </div>
+    </div>
+  <% end %>
+  <% if @articles.empty? %>
+    <h3 class='text-info'>AUCUN ARTICLE DANS LA CORBEILLE.</h3>
+  <% end %>
+</div>

@@ -23,5 +23,6 @@
     <% end %>
   </tbody>
 </table>
-
-<br>
+<% if @users.empty? %>
+    <h3 class='text-info'>AUCUN UTILISATEUR.</h3>
+<% end %>

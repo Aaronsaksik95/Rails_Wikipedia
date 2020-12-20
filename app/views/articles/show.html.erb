@@ -19,13 +19,24 @@
   <% end %>
 <% end %>
 </p>
+<p class="card-body text-info">
+  <strong>Auteur:</strong>
+  <%= @article.user.username %>
+</p>
 <% if @current_user && @current_user.id == @article.user.id %>
-  <p><%= link_to 'Supprimer', @article, method: :delete, data: { confirm: 'Are you sure?' }, :class => "not-nav" %></p>
+  <% if @article.display_or_not == nil %>
+  <p><%= link_to 'Corbeille', @article, method: :delete, data: { confirm: 'Are you sure?' }, :class => "not-nav" %></p>
   <p><%= link_to 'Modifier', edit_article_path(@article), :class => "not-nav" %></p>
+  <% else %>
+  <p><%= link_to "Détruire l'article", @article, method: :delete, data: { confirm: 'Are you sure?' }, :class => "not-nav" %></p>
+  <p><%= link_to 'Récupérer', recover_my_article_path(@article), :class => "not-nav" %></p>
+  <% end %>
   <p><%= link_to 'Historique', historical_article_path(@article), :class => "not-nav" %></p>
 <% elsif @current_user %>
   <p><%= link_to 'Modifier', edit_article_path(@article), :class => "not-nav" %></p>
 <% end %>
-
+<% if @article.display_or_not != nil %>
+  <small class="card-text text-danger">Supprimer le <%= @article.display_or_not %></small>
+<% end %>
 </div>
 <%= link_to 'Retour', articles_path, :class => "not-nav" %>

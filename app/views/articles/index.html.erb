@@ -9,7 +9,8 @@
         <h5 class="card-title"><%= article.title %></h5>
         <p class="card-subtitle mb-2 text-muted"><%= article.updated_at %></p>
         <p class="card-text"><%= article.content %></p>
-        <div class="">
+        
+      <div class="">
         <% if article.usertags[0] %>
           <small>MENTION:</small>
           <% for tag in article.usertags %>
@@ -17,10 +18,11 @@
           <% end %>
         <% end %>
     </div>
+    <small class="card-text text-info">Ecrit par: <%= article.user.username %></small>
         <p> <%= link_to 'Voir +', article, :class => "not-nav"%></p>
         <% if @current_user && @current_user.id == article.user.id %>
         <div class="d-flex">
-          <p><%= link_to 'Supprimer', article, method: :delete, data: { confirm: 'Are you sure?' }, :class => "not-nav" %></p>
+          <p><%= link_to 'Corbeille', article, method: :delete, data: { confirm: 'Are you sure?' }, :class => "not-nav" %></p>
           <p><%= link_to 'Modifier', edit_article_path(article), :class => "not-nav" %></p>
           <p><%= link_to 'Historique', historical_article_path(article), :class => "not-nav" %></p>
         </div>
@@ -29,5 +31,8 @@
         <% end %>
       </div>
     </div>
+  <% end %>
+  <% if @articles.empty? %>
+    <h3 class='text-info'>AUCUN ARTICLE.</h3>
   <% end %>
 </div>

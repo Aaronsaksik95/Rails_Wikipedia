@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_16_235313) do
+ActiveRecord::Schema.define(version: 2020_12_20_191143) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2020_12_16_235313) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
+    t.datetime "display_or_not"
     t.index ["user_id"], name: "index_articles_on_user_id"
   end
 
@@ -29,6 +30,16 @@ ActiveRecord::Schema.define(version: 2020_12_16_235313) do
   create_table "articles_usertags", id: false, force: :cascade do |t|
     t.integer "article_id", null: false
     t.integer "usertag_id", null: false
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "article_id", null: false
+    t.integer "user_id", null: false
+    t.index ["article_id"], name: "index_comments_on_article_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "historicals", force: :cascade do |t|
@@ -58,6 +69,8 @@ ActiveRecord::Schema.define(version: 2020_12_16_235313) do
     t.index ["user_id"], name: "index_usertags_on_user_id"
   end
 
+  add_foreign_key "comments", "articles"
+  add_foreign_key "comments", "users"
   add_foreign_key "historicals", "articles"
   add_foreign_key "historicals", "users"
   add_foreign_key "usertags", "users"

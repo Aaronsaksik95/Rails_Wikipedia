@@ -24,9 +24,7 @@ class HistoricalsController < ApplicationController
     @article = Article.find(@historical.article_id)
     @article.update_attribute('title', @historical.title)
     @article.update_attribute('content', @historical.content)
-    if @article.update_attribute('title', 'content')
-      redirect_to articles_path 
-    end
+    redirect_to articles_path 
   end
 
 

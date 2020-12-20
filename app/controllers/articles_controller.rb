@@ -1,14 +1,25 @@
 class ArticlesController < ApplicationController
   before_action :authorize_user, only: [:new, :create, :edit, :update, :destroy]
-  before_action :set_article, only: [:show, :edit, :update, :destroy]
+  before_action :set_article, only: [:show, :edit, :update, :destroy, :recover_my_article]
   before_action :redirect_user_if_no_article, only: [:destroy]
 
   def index
-    @articles = Article.all
+    @articles = Article.where(:display_or_not => nil)
   end
   
   def my_article
-    @articles = Article.where(:user_id => @current_user.id)
+    @articles = Article.where(:user_id => @current_user.id, :display_or_not => nil)
+  end
+
+  def my_article_deleted
+    @articles = Article.where(:user_id => @current_user.id).where.not(:display_or_not => nil)
+  end
+
+  def recover_my_article
+    
+    @article.display_or_not = nil
+    @article.save
+    redirect_to my_article_path
   end
 
   def show
@@ -24,7 +35,7 @@ class ArticlesController < ApplicationController
     if @article.save
       add_historical
       add_point_user(1)
-      redirect_to articles_path
+      redirect_to my_article_path
     else
       redirect_to new_article_path, notice: 'Wrong'
     end
@@ -49,12 +60,20 @@ class ArticlesController < ApplicationController
   end
   
   def destroy
-    @historical = Historical.where(article_id: @article.id)
-    @historical.destroy_all
-    @article.destroy
-    respond_to do |format|
-      format.html { redirect_to articles_path, notice: 'Article was successfully destroyed.' }
-      format.json { head :no_content }
+    if @article.display_or_not == nil
+      @article.update(display_or_not: Time.now)
+      respond_to do |format|
+        format.html { redirect_to articles_path, notice: 'The article will no longer display.' }
+        format.json { head :no_content }
+      end
+    else
+      @historical = Historical.where(article_id: @article.id)
+      @historical.destroy_all
+      @article.destroy
+      respond_to do |format|
+        format.html { redirect_to articles_path, notice: 'Article was successfully destroyed.' }
+        format.json { head :no_content }
+      end
     end
   end
 
